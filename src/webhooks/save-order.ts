@@ -19,6 +19,7 @@ export const SaveOrderRoute = () => {
       // Send Valid Response. We don't have validation yet but type safety is present.
       // we will implement middleware in future to automatically validate request and response.
       // this will reduce code duplicacy.
+      // TODO: Figure out this orderId 26 thing.
       const response: SaveOrderResponse = {
         success: '1',
         message: 'Your order is saved.',
