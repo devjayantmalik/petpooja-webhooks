@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { transformAndValidate } from 'class-transformer-validator';
-import { PushMenuRequest } from 'src/validators/requests/PushMenuRequest.js';
-import { PushMenuResponse } from 'src/validators/responses/PushMenuResponse.js';
+import { PushMenuRequest } from '../validators/requests/PushMenuRequest.js';
+import { PushMenuResponse } from '../validators/responses/PushMenuResponse.js';
 import { ValidationError } from 'class-validator';
 
 export const PushMenuRoute = () => {

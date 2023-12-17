@@ -1,6 +1,6 @@
 import { transformAndValidate } from 'class-transformer-validator';
 import { Router } from 'express';
-import { OrderCallbackRequest } from 'src/validators/requests/OrderCallbackRequest.js';
+import { OrderCallbackRequest } from '../validators/requests/OrderCallbackRequest.js';
 
 export const OrderCallbackRoute = () => {
   const router = Router();

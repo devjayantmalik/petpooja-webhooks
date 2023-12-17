@@ -1,11 +1,11 @@
 import { transformAndValidate } from 'class-transformer-validator';
 import { ValidationError } from 'class-validator';
 import { Router } from 'express';
-import { SaveOrderRequest } from 'src/validators/requests/SaveOrderRequest.js';
+import { SaveOrderRequest } from '../validators/requests/SaveOrderRequest.js';
 import {
   SaveOrderErrorResponse,
   SaveOrderResponse
-} from 'src/validators/responses/SaveOrderResponse.js';
+} from '../validators/responses/SaveOrderResponse.js';
 
 export const SaveOrderRoute = () => {
   const router = Router();
