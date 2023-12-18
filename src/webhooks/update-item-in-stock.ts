@@ -2,7 +2,10 @@ import { transformAndValidate } from 'class-transformer-validator';
 import { ValidationError } from 'class-validator';
 import { Router } from 'express';
 import { UpdateItemInStockRequest } from '../validators/requests/UpdateItemInStockRequest.js';
-import { UpdateItemInStockErrorResponse, UpdateItemInStockResponse } from '../validators/responses/UpdateItemInStockResponse.js';
+import {
+  UpdateItemInStockErrorResponse,
+  UpdateItemInStockResponse
+} from '../validators/responses/UpdateItemInStockResponse.js';
 
 export const UpdateItemInStockRoute = () => {
   const router = Router();
@@ -21,23 +24,21 @@ export const UpdateItemInStockRoute = () => {
       // this will reduce code duplicacy.
       // TODO: Figure out this orderId 26 thing.
       const response: UpdateItemInStockResponse = {
-        "code": "200",
-        "status": "success",
-        "message": "Stock status updated successfully"        
-    };
+        code: '200',
+        status: 'success',
+        message: 'Stock status updated successfully'
+      };
 
       return res.json(response);
     } catch (err) {
       // TODO: For now this is not fully implemented error handling. But we have basic for now.
-      let validaton_errors: = {}
-
 
       const response: UpdateItemInStockErrorResponse = {
-        "code": "400",
-        "message": "Stock status not updated successfully",
-        "success": "failed",
+        code: '400',
+        message: 'Stock status not updated successfully',
+        success: 'failed',
         errorCode: 'UOS_105',
-        validation_errors: ((err[0] as ValidationError).constraints || {})
+        validation_errors: (err[0] as ValidationError).constraints || {}
       };
       return res.status(400).json(response);
     }

@@ -33,15 +33,13 @@ export const UpdateOrderStatusRoute = () => {
       return res.json(response);
     } catch (err) {
       // TODO: For now this is not fully implemented error handling. But we have basic for now.
-      let validaton_errors: = {}
-
 
       const response: UpdateOrderStatusErrorResponse = {
         //This error  message is shown when order is modified or status of order is changed by restaurant.
         success: '0',
-        message: "There were some error in update order status.",
+        message: 'There were some error in update order status.',
         errorCode: 'UOS_105',
-        validation_errors: ((err[0] as ValidationError).constraints || {})
+        validation_errors: (err[0] as ValidationError).constraints || {}
       };
       return res.json(response);
     }
