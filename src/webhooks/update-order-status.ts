@@ -6,18 +6,25 @@ import {
   UpdateOrderStatusErrorResponse,
   UpdateOrderStatusResponse
 } from '../validators/responses/UpdateOrderStatusResponse.js';
+import { db } from '../database.js';
+import { toJson } from '../utils/toJson.js';
 
 export const UpdateOrderStatusRoute = () => {
   const router = Router();
 
-  router.post('/save-order', async (req, res) => {
+  router.post('/update-order-status', async (req, res) => {
     try {
       // Validate Input Request
       const data = (await transformAndValidate(
         UpdateOrderStatusRequest,
         req.body
       )) as UpdateOrderStatusRequest;
-      console.log({ data });
+
+      await db.updateOrderStatusRequest.upsert({
+        where: { uid: data.clientorderID },
+        create: { uid: data.clientorderID, contents: toJson(data) },
+        update: { contents: toJson(data) }
+      });
 
       // Send Valid Response. We don't have validation yet but type safety is present.
       // we will implement middleware in future to automatically validate request and response.
@@ -39,9 +46,9 @@ export const UpdateOrderStatusRoute = () => {
         success: '0',
         message: 'There were some error in update order status.',
         errorCode: 'UOS_105',
-        validation_errors: (err[0] as ValidationError).constraints || {}
+        validation_errors: (err[0] as ValidationError)?.constraints || {}
       };
-      return res.json(response);
+      return res.status(400).json(response);
     }
   });
 

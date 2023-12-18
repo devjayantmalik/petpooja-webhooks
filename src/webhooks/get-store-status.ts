@@ -2,6 +2,8 @@ import { transformAndValidate } from 'class-transformer-validator';
 import { Router } from 'express';
 import { GetStoreStatusRequest } from '../validators/requests/GetStoreStatusRequest.js';
 import { GetStoreStatusResponse } from '../validators/responses/GetStoreStatusResponse.js';
+import { db } from '../database.js';
+import { toJson } from '../utils/toJson.js';
 
 export const GetStoreStatusRoute = () => {
   const router = Router();
@@ -13,7 +15,12 @@ export const GetStoreStatusRoute = () => {
         GetStoreStatusRequest,
         req.body
       )) as GetStoreStatusRequest;
-      console.log({ data });
+
+      await db.getStoreStatusRequest.upsert({
+        where: { uid: data.restID },
+        create: { uid: data.restID, contents: toJson(data) },
+        update: { contents: toJson(data) }
+      });
 
       const response: GetStoreStatusResponse = {
         http_code: 200,
@@ -24,7 +31,7 @@ export const GetStoreStatusRoute = () => {
       return res.json(response);
     } catch (err) {
       // TODO: We don't need any Response, Just log the error whereever you want.
-      return res.status(400);
+      return res.status(400).end();
     }
   });
 

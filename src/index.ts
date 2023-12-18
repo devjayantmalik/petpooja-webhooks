@@ -7,7 +7,16 @@ export const main = async () => {
 
   app.use(express.json({ limit: '20mb' }));
 
+  app.use((req, res, next) => {
+    console.log({ url: req.originalUrl, headers: req.headers['content-type'] });
+    return next();
+  });
+
   app.use('/webhooks', WebhookRoutes());
+
+  app.use('*', (_req, res) => {
+    return res.status(404).end();
+  });
 
   app.listen(env.port, env.host, () =>
     console.log(`Server started at: http://${env.host}:${env.port}`)

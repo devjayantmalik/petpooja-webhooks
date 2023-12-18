@@ -6,6 +6,8 @@ import {
   UpdateItemInStockErrorResponse,
   UpdateItemInStockResponse
 } from '../validators/responses/UpdateItemInStockResponse.js';
+import { db } from '../database.js';
+import { toJson } from '../utils/toJson.js';
 
 export const UpdateItemInStockRoute = () => {
   const router = Router();
@@ -17,7 +19,12 @@ export const UpdateItemInStockRoute = () => {
         UpdateItemInStockRequest,
         req.body
       )) as UpdateItemInStockRequest;
-      console.log({ data });
+
+      await db.updateItemInStockRequest.upsert({
+        where: { uid: data.itemID.join('').toString() },
+        create: { uid: data.itemID.join('').toString(), contents: toJson(data) },
+        update: { contents: toJson(data) }
+      });
 
       // Send Valid Response. We don't have validation yet but type safety is present.
       // we will implement middleware in future to automatically validate request and response.
@@ -38,7 +45,7 @@ export const UpdateItemInStockRoute = () => {
         message: 'Stock status not updated successfully',
         success: 'failed',
         errorCode: 'UOS_105',
-        validation_errors: (err[0] as ValidationError).constraints || {}
+        validation_errors: (err[0] as ValidationError)?.constraints || {}
       };
       return res.status(400).json(response);
     }

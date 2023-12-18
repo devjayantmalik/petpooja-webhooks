@@ -6,6 +6,8 @@ import {
   SaveOrderErrorResponse,
   SaveOrderResponse
 } from '../validators/responses/SaveOrderResponse.js';
+import { db } from '../database.js';
+import { toJson } from '../utils/toJson.js';
 
 export const SaveOrderRoute = () => {
   const router = Router();
@@ -14,8 +16,12 @@ export const SaveOrderRoute = () => {
     try {
       // Validate Input Request
       const data = (await transformAndValidate(SaveOrderRequest, req.body)) as SaveOrderRequest;
-      console.log({ data });
 
+      await db.saveOrderRequest.upsert({
+        where: { uid: data.orderinfo.OrderInfo.Order.details.orderID },
+        create: { uid: data.orderinfo.OrderInfo.Order.details.orderID, contents: toJson(data) },
+        update: { contents: toJson(data) }
+      });
       // Send Valid Response. We don't have validation yet but type safety is present.
       // we will implement middleware in future to automatically validate request and response.
       // this will reduce code duplicacy.
@@ -37,7 +43,7 @@ export const SaveOrderRoute = () => {
         const error: ValidationError = (err as ValidationError[])[0];
 
         // Prepare errors
-        Object.entries(error.constraints || {}).map(([key, value]) => {
+        Object.entries(error?.constraints || {}).map(([key, value]) => {
           validation_errors[key] = [value];
         });
       }
@@ -48,7 +54,7 @@ export const SaveOrderRoute = () => {
         errorCode: 'SO_105',
         validation_errors: validation_errors
       };
-      return res.json(response);
+      return res.status(400).json(response);
     }
   });
 

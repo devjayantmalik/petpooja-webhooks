@@ -1,6 +1,8 @@
 import { transformAndValidate } from 'class-transformer-validator';
 import { Router } from 'express';
 import { OrderCallbackRequest } from '../validators/requests/OrderCallbackRequest.js';
+import { db } from '../database.js';
+import { toJson } from '../utils/toJson.js';
 
 export const OrderCallbackRoute = () => {
   const router = Router();
@@ -12,13 +14,18 @@ export const OrderCallbackRoute = () => {
         OrderCallbackRequest,
         req.body
       )) as OrderCallbackRequest;
-      console.log({ data });
+
+      await db.orderCallbackRequest.upsert({
+        where: { uid: data.orderID },
+        create: { uid: data.orderID, contents: toJson(data) },
+        update: { contents: toJson(data) }
+      });
 
       // We don't need any Response, Just need to respond with 200.
-      return res.status(200);
+      return res.status(200).end();
     } catch (err) {
       // TODO: We don't need any Response, Just log the error whereever you want.
-      return res.status(400);
+      return res.status(400).end();
     }
   });
 

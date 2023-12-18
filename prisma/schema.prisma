@@ -1,0 +1,59 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model PushMenuRequest {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  uid      String @unique @map("uid")
+  contents Json   @map("contents")
+}
+
+model SaveOrderRequest {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  uid      String @unique @map("uid")
+  contents Json   @map("contents")
+}
+
+model UpdateItemInStockRequest {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  uid      String @unique @map("uid")
+  contents Json   @map("contents")
+}
+
+model UpdateItemOutOfStockRequest {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  uid      String @unique @map("uid")
+  contents Json   @map("contents")
+}
+
+model UpdateOrderStatusRequest {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  uid      String @unique @map("uid")
+  contents Json   @map("contents")
+}
+
+model UpdateStoreStatusRequest {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  uid      String @unique @map("uid")
+  contents Json   @map("contents")
+}
+
+model GetStoreStatusRequest {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  uid      String @unique @map("uid")
+  contents Json   @map("contents")
+}
+
+model OrderCallbackRequest {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  uid      String @unique @map("uid")
+  contents Json   @map("contents")
+}
