@@ -7,7 +7,7 @@ export const main = async () => {
 
   app.use(express.json({ limit: '20mb' }));
 
-  app.use((req, res, next) => {
+  app.use((req, _res, next) => {
     console.log({ url: req.originalUrl, headers: req.headers['content-type'] });
     return next();
   });

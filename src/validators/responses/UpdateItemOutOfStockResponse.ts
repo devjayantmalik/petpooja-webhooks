@@ -1,4 +1,4 @@
-import { IsNumber, IsString } from 'class-validator';
+import { IsNumber, IsString, IsObject } from 'class-validator';
 
 export class UpdateItemOutOfStockResponse {
   @IsNumber()

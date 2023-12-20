@@ -121,8 +121,8 @@ class Details3 {
   @IsString()
   created_on: string;
   @IsNumber()
-  enable_delivery: numb;
-  @IsNumber() er;
+  enable_delivery: number;
+  @IsNumber()
   min_prep_time: number;
   @IsString()
   callback_url: string;
@@ -153,8 +153,8 @@ class Detail {
   @IsString()
   name: string;
   @IsString()
-  gst_liability: strin;
-  @IsArray() g;
+  gst_liability: string;
+  @IsArray()
   item_tax: ItemTax[];
   @IsString()
   item_discount: string;

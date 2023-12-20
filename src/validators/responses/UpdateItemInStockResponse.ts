@@ -1,4 +1,4 @@
-import { IsString } from 'class-validator';
+import { IsString, IsObject } from 'class-validator';
 
 export class UpdateItemInStockResponse {
   @IsString()
@@ -18,6 +18,7 @@ export class UpdateItemInStockErrorResponse {
   success: string;
   @IsString()
   errorCode: string;
+
   @IsObject()
   validation_errors: Record<string, string>;
 }

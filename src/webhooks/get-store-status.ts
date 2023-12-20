@@ -2,7 +2,6 @@ import { transformAndValidate } from 'class-transformer-validator';
 import { Router } from 'express';
 import { GetStoreStatusRequest } from '../validators/requests/GetStoreStatusRequest.js';
 import { GetStoreStatusResponse } from '../validators/responses/GetStoreStatusResponse.js';
-import { UpdateStoreStatusRequest } from '../validators/requests/UpdateStoreStatusRequest.js';
 import { db } from '../database.js';
 
 export const GetStoreStatusRoute = () => {
