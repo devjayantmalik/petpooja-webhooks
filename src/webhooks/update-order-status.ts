@@ -8,6 +8,7 @@ import {
 } from '../validators/responses/UpdateOrderStatusResponse.js';
 import { db } from '../database.js';
 import { toJson } from '../utils/toJson.js';
+import { env } from '../env.js';
 
 export const UpdateOrderStatusRoute = () => {
   const router = Router();
@@ -19,6 +20,16 @@ export const UpdateOrderStatusRoute = () => {
         UpdateOrderStatusRequest,
         req.body
       )) as UpdateOrderStatusRequest;
+
+      const headers = new Headers();
+      headers.set('Content-Type', 'application/json');
+      const result = await fetch(`${env.petpoojaBaseUrl}/update_order_status`, {
+        body: toJson(data),
+        method: 'POST',
+        headers: headers
+      });
+
+      console.log({ status: result.status, result: await result.json() });
 
       await db.updateOrderStatusRequest.upsert({
         where: { uid: data.clientorderID },

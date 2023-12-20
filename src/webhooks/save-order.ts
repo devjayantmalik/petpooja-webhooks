@@ -8,6 +8,7 @@ import {
 } from '../validators/responses/SaveOrderResponse.js';
 import { db } from '../database.js';
 import { toJson } from '../utils/toJson.js';
+import { env } from '../env.js';
 
 export const SaveOrderRoute = () => {
   const router = Router();
@@ -17,6 +18,17 @@ export const SaveOrderRoute = () => {
       // Validate Input Request
       const data = (await transformAndValidate(SaveOrderRequest, req.body)) as SaveOrderRequest;
 
+      // Send Request to Petpooja
+      const headers = new Headers();
+      headers.set('Content-Type', 'application/json');
+      const result = await fetch(`${env.petpoojaBaseUrl}/save_order`, {
+        body: JSON.stringify(data),
+        method: 'POST',
+        headers: headers
+      });
+      console.log({ status: result.status, result: await result.json() });
+
+      // add to database
       await db.saveOrderRequest.upsert({
         where: { uid: data.orderinfo.OrderInfo.Order.details.orderID },
         create: { uid: data.orderinfo.OrderInfo.Order.details.orderID, contents: toJson(data) },
