@@ -24,6 +24,7 @@ export const OrderCallbackRoute = () => {
       // We don't need any Response, Just need to respond with 200.
       return res.status(200).end();
     } catch (err) {
+      console.log({ err });
       // TODO: We don't need any Response, Just log the error whereever you want.
       return res.status(400).end();
     }
