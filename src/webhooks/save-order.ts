@@ -46,7 +46,7 @@ export const SaveOrderRoute = () => {
         message: 'Your order is saved.',
         restID: data.orderinfo.OrderInfo.Restaurant.details.restID,
         clientOrderID: data.orderinfo.OrderInfo.Order.details.orderID,
-        orderID: '26'
+        orderID: data.orderinfo.OrderInfo.Order.details.orderID
       };
       return res.json(response);
     } catch (err) {
