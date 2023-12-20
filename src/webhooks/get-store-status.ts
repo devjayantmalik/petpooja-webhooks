@@ -2,8 +2,8 @@ import { transformAndValidate } from 'class-transformer-validator';
 import { Router } from 'express';
 import { GetStoreStatusRequest } from '../validators/requests/GetStoreStatusRequest.js';
 import { GetStoreStatusResponse } from '../validators/responses/GetStoreStatusResponse.js';
+import { UpdateStoreStatusRequest } from '../validators/requests/UpdateStoreStatusRequest.js';
 import { db } from '../database.js';
-import { toJson } from '../utils/toJson.js';
 
 export const GetStoreStatusRoute = () => {
   const router = Router();
@@ -16,16 +16,16 @@ export const GetStoreStatusRoute = () => {
         req.body
       )) as GetStoreStatusRequest;
 
-      await db.getStoreStatusRequest.upsert({
-        where: { uid: data.restID },
-        create: { uid: data.restID, contents: toJson(data) },
-        update: { contents: toJson(data) }
+      const status = await db.updateStoreStatusRequest.findFirst({
+        where: { uid: data.restID }
       });
+
+      if (!status) throw new Error("Status with provided id doesn't exist.");
 
       const response: GetStoreStatusResponse = {
         http_code: 200,
         status: 'success',
-        store_status: '1',
+        store_status: String((status.contents as any).store_status),
         message: 'Store Delivery Status fetched successfully'
       };
       return res.json(response);
