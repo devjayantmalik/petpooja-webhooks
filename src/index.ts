@@ -7,6 +7,8 @@ export const main = async () => {
 
   app.use(express.json({ limit: '20mb' }));
 
+  app.get('/health', (_req, res) => res.sendStatus(200));
+
   app.use((req, _res, next) => {
     console.log({ url: req.originalUrl, headers: req.headers['content-type'] });
     return next();
