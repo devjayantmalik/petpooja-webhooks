@@ -9,6 +9,7 @@ import {
 import { db } from '../database.js';
 import { toJson } from '../utils/toJson.js';
 import { env } from '../env.js';
+import crypto from 'crypto';
 
 export const SaveOrderRoute = () => {
   const router = Router();
@@ -17,6 +18,8 @@ export const SaveOrderRoute = () => {
     try {
       // Validate Input Request
       const data = (await transformAndValidate(SaveOrderRequest, req.body)) as SaveOrderRequest;
+      const hash = crypto.createHash('md5').update(JSON.stringify(data)).digest('hex');
+      data.orderinfo.OrderInfo.Order.details.orderID = hash;
 
       // Send Request to Petpooja
       const headers = new Headers();

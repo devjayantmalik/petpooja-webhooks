@@ -1,4 +1,4 @@
-import { IsArray, IsNumber, IsObject, IsString } from 'class-validator';
+import { IsArray, IsNumber, IsObject, IsOptional, IsString } from 'class-validator';
 
 export class SaveOrderRequest {
   @IsString()
@@ -74,6 +74,7 @@ class Order {
 
 class Details3 {
   @IsString()
+  @IsOptional()
   orderID: string;
   @IsString()
   preorder_date: string;
