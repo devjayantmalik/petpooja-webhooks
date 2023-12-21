@@ -29,6 +29,8 @@ export const PushMenuRoute = () => {
       };
       return res.json(response);
     } catch (err) {
+      console.log({ err });
+
       let errorMessage = '';
       if (Array.isArray(err) && err.shift() instanceof ValidationError) {
         const error: ValidationError = (err as ValidationError[])[0];

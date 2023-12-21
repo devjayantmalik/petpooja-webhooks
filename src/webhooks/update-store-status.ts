@@ -29,6 +29,8 @@ export const UpdateStoreStatusRoute = () => {
       };
       return res.json(response);
     } catch (err) {
+      console.log({ err });
+
       // TODO: We don't need any Response, Just log the error whereever you want.
       return res.status(400).end();
     }

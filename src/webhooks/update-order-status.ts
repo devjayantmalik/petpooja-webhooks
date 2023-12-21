@@ -50,6 +50,8 @@ export const UpdateOrderStatusRoute = () => {
       };
       return res.json(response);
     } catch (err) {
+      console.log({ err });
+
       // TODO: For now this is not fully implemented error handling. But we have basic for now.
 
       const response: UpdateOrderStatusErrorResponse = {
