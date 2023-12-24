@@ -1,8 +1,7 @@
 import { Router } from 'express';
 import { db } from '../database.js';
 import { FetchSaveOrderResponse } from '../validators/apis/responses/FetchSaveOrderResponse.js';
-import { SaveOrderRequest } from '../validators/requests/SaveOrderRequest.js';
-import { UpdateOrderStatusRequest } from 'src/validators/requests/UpdateOrderStatusRequest.js';
+import { OrderCallbackRequest } from '../validators/requests/OrderCallbackRequest.js';
 
 export const FetchOrderStatusRoute = () => {
   const router = Router();
@@ -10,7 +9,7 @@ export const FetchOrderStatusRoute = () => {
   router.get('/fetch-order-status/:clientOrderId', async (req, res) => {
     try {
       // Validate Input Request
-      const order = await db.updateOrderStatusRequest.findFirst({
+      const order = await db.orderCallbackRequest.findFirst({
         where: { uid: req.params.clientOrderId }
       });
 
@@ -18,7 +17,7 @@ export const FetchOrderStatusRoute = () => {
 
       const response: FetchSaveOrderResponse = {
         success: true,
-        result: order.contents as unknown as UpdateOrderStatusRequest
+        result: order.contents as unknown as OrderCallbackRequest
       };
       return res.json(response);
     } catch (err) {
