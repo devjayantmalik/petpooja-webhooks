@@ -1,6 +1,7 @@
 import express from 'express';
 import { WebhookRoutes } from './webhooks/index.js';
 import { env } from './env.js';
+import { ApiRoutes } from './apis/index.js';
 
 export const main = async () => {
   const app = express();
@@ -15,6 +16,7 @@ export const main = async () => {
   });
 
   app.use('/webhooks', WebhookRoutes());
+  app.use('/apis', ApiRoutes());
 
   app.use('*', (_req, res) => {
     return res.status(404).end();
