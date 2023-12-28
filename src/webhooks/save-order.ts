@@ -25,7 +25,12 @@ export const SaveOrderRoute = () => {
       const headers = new Headers();
       headers.set('Content-Type', 'application/json');
       const result = await fetch(`${env.petpoojaBaseUrl}/save_order`, {
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          ...data,
+          app_key: env.saveOrderAppKey,
+          app_secret: env.saveOrderAppSecret,
+          access_token: env.saveOrderAccessToken
+        }),
         method: 'POST',
         headers: headers
       });

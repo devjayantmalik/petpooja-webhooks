@@ -1,12 +1,6 @@
 import { IsArray, IsNumber, IsObject, IsOptional, IsString } from 'class-validator';
 
 export class SaveOrderRequest {
-  @IsString()
-  app_key: string;
-  @IsString()
-  app_secret: string;
-  @IsString()
-  access_token: string;
   orderinfo: Orderinfo;
 }
 
