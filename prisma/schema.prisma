@@ -57,3 +57,19 @@ model OrderCallbackRequest {
   uid      String @unique @map("uid")
   contents Json   @map("contents")
 }
+
+model PhonepePayRequest {
+  id            String @id @default(auto()) @map("_id") @db.ObjectId
+  userId        String @map("user_id")
+  phoneNumber   String @map("phone_number")
+  merchantTxnId String @unique @map("merchant_txn_id")
+  contents      Json   @map("contents")
+}
+
+model PhonepePayStatus {
+  id            String @id @default(auto()) @map("_id") @db.ObjectId
+  userId        String @map("user_id")
+  phoneNumber   String @map("phone_number")
+  merchantTxnId String @unique @map("merchant_txn_id")
+  contents      Json   @map("contents")
+}

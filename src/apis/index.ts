@@ -5,6 +5,8 @@ import { FetchItemOutOfStockRoute } from './fetch-item-out-of-stock.js';
 import { FetchSaveOrderRoute } from './fetch-save-order.js';
 import { FetchStoreStatusRoute } from './fetch-store-status.js';
 import { FetchOrderStatusRoute } from './fetch-order-status.js';
+import { PhonepePayRoute } from './phonepe-pay.js';
+import { PhonepeStatusRoute } from './phonepe-status.js';
 
 export const ApiRoutes = () => {
   const router = Router();
@@ -15,6 +17,8 @@ export const ApiRoutes = () => {
   router.use(FetchItemOutOfStockRoute());
   router.use(FetchSaveOrderRoute());
   router.use(FetchStoreStatusRoute());
+  router.use(PhonepePayRoute());
+  router.use(PhonepeStatusRoute());
 
   return router;
 };
