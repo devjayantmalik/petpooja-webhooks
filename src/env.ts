@@ -1,6 +1,6 @@
 export const env = {
   port: parseInt(process.env.PORT || '') || 3000,
-  host: '127.0.0.1',
+  host: '0.0.0.0',
   petpoojaBaseUrl: process.env.PETPOOJA_BASE_URL,
   saveOrderAppKey: process.env.SAVE_ORDER_APP_KEY || '',
   saveOrderAppSecret: process.env.SAVE_ORDER_APP_SECRET || '',
