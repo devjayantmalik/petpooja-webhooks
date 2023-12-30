@@ -49,7 +49,7 @@ export const PhonepeRefundRoute = () => {
       const x_verify =
         crypto
           .createHash('sha256')
-          .update(payloadBase64 + `/pg/v1/refund/` + env.phonepe.saltKey)
+          .update(payloadBase64 + `/pg/v1/refund` + env.phonepe.saltKey)
           .digest('hex') +
         ('###' + env.phonepe.saltIndex);
 
@@ -65,8 +65,16 @@ export const PhonepeRefundRoute = () => {
       const responseData = await phonePeResponse.json();
 
       // Save Request to Database
-      await db.phonepeRefund.create({
-        data: {
+      await db.phonepeRefund.upsert({
+        where: { merchantTxnId: txn.merchantTxnId },
+        create: {
+          userId: txn.userId,
+          merchantTxnId: txn.merchantTxnId,
+          phoneNumber: txn.phoneNumber,
+          amount: txn.amount,
+          contents: responseData
+        },
+        update: {
           userId: txn.userId,
           merchantTxnId: txn.merchantTxnId,
           phoneNumber: txn.phoneNumber,
@@ -75,7 +83,7 @@ export const PhonepeRefundRoute = () => {
         }
       });
 
-      return res.json({ success: responseData.success, state: responseData.data.state });
+      return res.json(responseData);
     } catch (err) {
       console.log({ err });
       // TODO: We don't need any Response, Just log the error whereever you want.
