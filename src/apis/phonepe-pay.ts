@@ -71,6 +71,7 @@ export const PhonepePayRoute = () => {
           userId: data.userId,
           phoneNumber: data.phoneNumber,
           merchantTxnId: merchantTxnId,
+          amount: data.amount,
           contents: { ...responseData }
         }
       });

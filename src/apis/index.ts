@@ -7,6 +7,7 @@ import { FetchStoreStatusRoute } from './fetch-store-status.js';
 import { FetchOrderStatusRoute } from './fetch-order-status.js';
 import { PhonepePayRoute } from './phonepe-pay.js';
 import { PhonepeStatusRoute } from './phonepe-status.js';
+import { PhonepeRefundRoute } from './phonepe-refund.js';
 
 export const ApiRoutes = () => {
   const router = Router();
@@ -19,6 +20,7 @@ export const ApiRoutes = () => {
   router.use(FetchStoreStatusRoute());
   router.use(PhonepePayRoute());
   router.use(PhonepeStatusRoute());
+  router.use(PhonepeRefundRoute());
 
   return router;
 };

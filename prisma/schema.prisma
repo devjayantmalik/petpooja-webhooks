@@ -63,6 +63,7 @@ model PhonepePayRequest {
   userId        String @map("user_id")
   phoneNumber   String @map("phone_number")
   merchantTxnId String @unique @map("merchant_txn_id")
+  amount        Int    @default(0) @map("amount")
   contents      Json   @map("contents")
 }
 
@@ -71,5 +72,14 @@ model PhonepePayStatus {
   userId        String @map("user_id")
   phoneNumber   String @map("phone_number")
   merchantTxnId String @unique @map("merchant_txn_id")
+  contents      Json   @map("contents")
+}
+
+model PhonepeRefund {
+  id            String @id @default(auto()) @map("_id") @db.ObjectId
+  userId        String @map("user_id")
+  phoneNumber   String @map("phone_number")
+  merchantTxnId String @unique @map("merchant_txn_id")
+  amount        Int    @default(0) @map("amount")
   contents      Json   @map("contents")
 }
